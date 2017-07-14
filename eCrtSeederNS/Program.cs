@@ -30,6 +30,7 @@ namespace eCrtSeederNS
 
         public static int AwardTotal { get; set; }
         public static int AB_ecert_totalCSLamount { get; set; }
+        public static int AB_ecert_totalCSGPamount { get; set; }
         public static int NL_ecert_totaldisbursement { get; set; }
 
         public static string eCertRecordNS { get; set; }
@@ -286,9 +287,9 @@ namespace eCrtSeederNS
                     + ProgramStartDate  //32
                     + ProgramEndDate    //33
                     + semesterIndicator //34
-                    + CSLAmount.PadLeft(6, '0') //35
+                    + CSLAmount.PadLeft(6, '0')     //35
                     + Filler.AddFiller(6)   //36
-                    + CSLAmount.PadLeft(6, '0')     //37
+                    + (Convert.ToInt32(CSLAmount) + AwardTotal).ToString().PadLeft(6, '0') //37
                     + mSFAaPTIndicator.Truncate(1) //38 PT Indicator
                     + Filler.AddFiller(4)   //39
                     + CertificateNumber //40
@@ -355,7 +356,7 @@ namespace eCrtSeederNS
                     + semesterIndicator  //35
                     + CSLAmount.PadLeft(6, '0') //36
                     + g1.NLAmount.ToString().PadLeft(6, '0')  //37
-                    + (Convert.ToInt32(CSLAmount) + g1.NLAmount).ToString().PadLeft(6, '0') //38
+                    + (Convert.ToInt32(CSLAmount) + g1.NLAmount+AwardTotal).ToString().PadLeft(6, '0') //38
                     + Filler.AddFiller(1)   //39
                     + "I" + CertificateNumber.Truncate(6) //40
                     + NotBeforeDate //41
@@ -389,7 +390,7 @@ namespace eCrtSeederNS
 
                 // total of all disbursements for ecert NL trailer
                 NL_ecert_totaldisbursement = NL_ecert_totaldisbursement + AwardTotal + Convert.ToInt32(CSLAmount) + Convert.ToInt32(g1.NL_provintial_grant) + Convert.ToInt32(g1.NLAmount);
-
+                
                
                 //eCert record section 2 for AB
                 eCertRecordAB_section2 =
@@ -481,14 +482,18 @@ namespace eCrtSeederNS
 
                 //Total CSL amount for AB ecert trailer
                 AB_ecert_totalCSLamount = AB_ecert_totalCSLamount + Convert.ToInt32(CSLAmount);
+                AB_ecert_totalCSGPamount = AB_ecert_totalCSGPamount + AwardTotal;
 
-                
-                //Total of all disbursements per file
-                TotalDisbursement = TotalDisbursement + AwardTotal+Convert.ToInt32(CSLAmount);
+
 
                 if (status == "N")
                 {
                     TotalOfCanceledDisbursement = TotalOfCanceledDisbursement + AwardTotal + Convert.ToInt32(CSLAmount);
+                }
+                else
+                {
+                    //Total of all Non Cancelled disbursements per file
+                    TotalDisbursement = TotalDisbursement + AwardTotal + Convert.ToInt32(CSLAmount);
                 }
 
                 SINHashTotal = SINHashTotal + SINCommonForMSFAAandEcert;
@@ -562,7 +567,7 @@ namespace eCrtSeederNS
                     break;
                 case "AB":
                     //add trailer to eCert AB 
-                    File.AppendAllText(pathToFile + eCertFileName, "99" + NumberOfeCertRecords.ToString().PadLeft(9, '0') + NumberOfeCertRecords.ToString().PadLeft(9, '0')+ "000000000"+ NumberOfeCertRecords.ToString().PadLeft(9, '0')+ AB_ecert_Section6_counter.ToString().PadLeft(9,'0') + AB_ecert_totalCSLamount.ToString().PadLeft(15, '0') + TotalDisbursement.ToString().PadLeft(15, '0') + Filler.AddFiller(193) + Environment.NewLine);
+                    File.AppendAllText(pathToFile + "CSL.CERT.SENT." + CurrentDate.GenerateTodayDate(), "99" + NumberOfeCertRecords.ToString().PadLeft(9, '0') + NumberOfeCertRecords.ToString().PadLeft(9, '0')+ "000000000"+ NumberOfeCertRecords.ToString().PadLeft(9, '0')+ AB_ecert_Section6_counter.ToString().PadLeft(9,'0') + AB_ecert_totalCSLamount.ToString().PadLeft(15, '0') + AB_ecert_totalCSGPamount.ToString().PadLeft(15, '0') + Filler.AddFiller(193) + Environment.NewLine);
                     break;
             }
             //add trailer to MSFAA
