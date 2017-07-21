@@ -41,6 +41,24 @@ namespace eCrtSeederNS
             return eCertHeader;
         }
 
+        public static string AddEcertHeaderYT()
+        {
+
+            string eCertHeader = "H" + Program.SequenceNumber.ToString().PadLeft(9, '0') + Program.Originator.ToString() + CurrentDate.GenerateTodayDate() + Filler.AddFiller(592);
+            return eCertHeader;
+        }
+
+        public static string AddEcertHeaderPE()
+        {
+
+            string ServiceProvider = RandomData.RandomDigits(8);
+            string FileCreationDate = CurrentDate.GenerateTodayDate();
+
+            //Result String
+            string eCertHeader = "H" + Program.SequenceNumber.ToString().PadLeft(9, '0') + Program.Originator.ToString() + ServiceProvider + FileCreationDate + Filler.AddFiller(825);
+            return eCertHeader;
+        }
+
         public static string AddMSFAAHeader()
         {
             string RecordTypeHeader = "100";

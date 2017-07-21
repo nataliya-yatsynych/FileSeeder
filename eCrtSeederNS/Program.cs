@@ -25,8 +25,9 @@ namespace eCrtSeederNS
         public static string MSFAAfileName { get; set; }
         //ecert
         public static int TotalDisbursement { get; set; }
-
+        public static int TotalDisbursementYT { get; set; }
         public static int TotalOfCanceledDisbursement { get; set; }
+        public static int TotalOfCanceledDisbursementYT { get; set; }
 
         public static int AwardTotal { get; set; }
         public static int AB_ecert_totalCSLamount { get; set; }
@@ -36,6 +37,9 @@ namespace eCrtSeederNS
         public static string eCertRecordNS { get; set; }
 
         public static string eCertRecordNL { get; set; }
+        public static string eCertRecordPE { get; set; }
+        public static string eCertRecordYT { get; set; }
+        
         public static string eCertRecordAB_section2 { get; set; }
         public static string eCertRecordAB_section3 { get; set; }
         public static string eCertRecordAB_section5 { get; set; }
@@ -49,13 +53,15 @@ namespace eCrtSeederNS
         public static string ABProgramType { get; set; }
         static public void Main(string[] args)
         {
-
-            Console.WriteLine("Files will be craeted in the 'C:\\TestFiles' location. Please ensure you have this folder in place");
-            Console.WriteLine("Enter string like: 1 2 1 ON");
-            Console.WriteLine("arg1: NumberOfeCertRecords ");
-            Console.WriteLine("arg2: SequenceNumber ");
-            Console.WriteLine("arg3: MSFAASequenceNumberInHeader ");
-            Console.WriteLine("arg4: Province of Originator ");
+            
+            Console.WriteLine("app can generate MSFAA and ecert files for NS/NL/AB/YT/PE provinces");
+            Console.WriteLine(Environment.NewLine);
+            Console.WriteLine("****Files will be saved to the 'C:\\TestFiles' location. Please create this folder manually****"+ Environment.NewLine);
+            Console.WriteLine("****Enter string like: 1 2 3 ON ");
+            Console.WriteLine("****arg 1: Number Of Records ");
+            Console.WriteLine("****arg 2: Sequence Number in File Name ");
+            Console.WriteLine("****arg 3: MSFAA Sequence Number In Header (can be any number if msfaa file is not required for your test) ");
+            Console.WriteLine("****arg 4: Province of Originator ");
 
             args = Console.ReadLine().Split(' ');
 
@@ -74,7 +80,7 @@ namespace eCrtSeederNS
             string[] PostalCode = new string[] { "L4Z6S4", "l4z6m4" };
             string[] SemesterIndicator = new string[] { "S", "P" };
             string[] PTIndicator = new string[] { "F", "P" };
-            string[] EnrollmentConfirmation = new string[] { "C", "U" };
+            string[] EnrollmentConfirmation = new string[] { /*"C",*/ "U" };
             string[] Status = new string[] { "N", "P", "P" };
             string[] MSFAaPTIndicator = new string[] { "FT", "PT" };
             string[] FirstNames = new string[] { "Gerhardt", "Stewart", "Lissi", "Kyle", "Juditha", "Brandice", "Juana", "Anneliese", "Thedrick", "Ruthy", "Joann", "Sampson", "Ivie", "Judy", "Noach", "Gaye", "Frankie", "Mariska", "Ondrea", "Merrill", "Stewart", "Helli", "Mariska", "Mariette", "Shadow", "Connor", "Penny", "Katerine", "Tandi", "Lorelei", "Pier", "Jackie", "Neda", "Derril", "Hale", "Cam", "Brockie", "Shelagh", "Jose", "Woodman", "Susann", "Evvy", "Marline", "Abigale", "Gottfried", "Jeremias", "Martie", "Adeline", "Mollee", "Filippa", "Ray", "Jami", "Dorothee", "Larry", "Wini", "Jasen", "Kearney", "Maudie", "Gradey", "Morgen", "Bronson", "Erda", "Vladimir", "Fayth", "Viviana", "Jemmy", "Randee", "Stanislaw", "Jodie", "Aurie", "Rosemaria", "Agnes", "Wilhelmina", "Deerdre", "Salomo", "Aubrie", "Sydney", "Jacintha", "Bondy", "Germaine", "Odilia", "Denny", "Asa", "Keri", "Anet", "Elysia", "Janeen", "Jessee", "Wayne", "Sherilyn", "Dolorita", "Alric", "Cindi", "Sybil", "Horatio", "Sybilla", "Olivier", "Jaymee", "Rene", "Brigg", "Harland", "Jilleen", "Amata", "Lizabeth", "Jourdain", "Peri", "Abigail", "Hastie", "Joanna", "Marjorie", "Laurel", "Tom", "Rosie", "Erich", "Kelley", "Bryant", "Perry", "Sisile", "Lolita", "Vick", "Cully", "Leda", "Kelila", "Pierre", "Idalina", "Cesare", "Stace", "Aldous", "Chanda", "Con", "Billy", "Christie", "Della", "Malinda", "Maje", "Phip", "Nobie", "Kati", "Timothea", "Addie", "Melina", "Steffane", "Georges", "Bondon", "Mavis", "Nolana", "Mortie", "Constantia", "Clio", "Rosie", "Josefina", "Davida", "Madlen", "Rorke", "Susette", "Beryl", "Bette", "Leta", "Rusty", "Skipton", "Lynea", "Bethanne", "Dmitri", "Chev", "Bobby", "Heddi", "Tina", "Aimee", "Worden", "Rebecca", "June", "Lesya", "Englebert", "Mareah", "Hale", "Scottie", "Frederigo", "Grazia", "Marty", "Bertha", "Jerrylee", "Marrilee", "Dan", "Olly", "Sabine", "Barty", "Michel", "Lea", "Paul", "Terrye", "Catrina", "Gale", "Lucian", "Yevette", "Wernher", "Salomo", "Janet", "Karlen", "Morty", "Othelia", "Penelope", "Saunders", "Ted", "Elena", "Natty", "Christian", "Mick", "Skell", "Vale", "Alphard", "Abbye", "Ronni", "Melanie", "Edmund", "Tuckie", "Hertha", "Hermann", "Gamaliel", "Alvin", "Marla", "Phyllida", "Ingra", "Alanah", "Natty", "Margret", "Cassi", "Caty", "Claudetta", "Auguste", "Meris", "Ranee", "Janela", "Randa", "Ced", "Annabel", "Sandor", "Rosalia", "Nanny", "Bondon", "Bennett", "Audrie", "Saidee", "Pansy", "Ignatius", "Dolorita", "Hillie", "Philis", "Catha", "Bronnie", "Mommy", "Neddie", "Bobbie", "Stace", "Shepperd", "Jennie", "Nikolaus", "Henrik", "Mead", "Kelli", "Elsbeth", "Halie", "Vittorio", "Danny", "Jesselyn", "Milton", "Lanie", "Estell", "Montgomery", "Sabra", "Sidnee", "Danice", "Arnoldo", "Dido", "Arlina", "Marleah", "Vitia", "Robin", "Heddie", "Freeman", "Kim", "Carlynne", "Dolly", "Lilith", "Tildie", "Vite", "Lyn", "Jordain", "Perren", "Remington", "Niki", "Lyda", "Dermot", "Phedra", "Sheilakathryn", "Rickert", "Helli", "Stella", "Johnathon", "Danielle", "Lynnea", "Stefano", "Millisent", "Ari", "Isis", "Charyl", "Tiff", "Dominique", "Porty", "Padraic", "Roseann", "Haydon", "Gaven", "Raddie", "Herrick", "Tobe", "Jarrod", "Paloma", "Carie", "Brunhilde", "Andeee", "Caryn", "Wallie", "Yancy", "Brittan", "Vi", "Farrel", "Gothart", "Sophronia", "Jeth", "Pepe", "Junia", "Bonni", "Wynn", "Giraud", "Dugald", "Rene", "Sascha", "Nicoli", "Arvin", "Rianon", "Abbie", "Karina", "Daile", "Marillin", "Elsie", "Rhodie", "Tyne", "Felicia", "Huntington", "Alyssa", "Caitrin", "Vinita", "Read", "Minnaminnie", "Elsie", "Wilmer", "Seymour", "Irene", "Saree", "Hyacinthie", "Darb", "Kathie", "Brunhilde", "Clemente", "Henderson", "Temple", "Eleanore", "Andreana", "Alfie", "Sid", "Morley", "Margalo", "Willey", "Jill", "Pauly", "Viv", "Forester", "Roberta", "Dollie", "Hyacinthia", "Joellen", "Quillan", "Man", "Gawain", "Ginevra", "Rudiger", "Terence", "Del", "Freda", "Rickie", "Harry", "Brennen", "Arleyne", "Cozmo", "Deb", "Revkah", "Colet", "Quill", "Melony", "Oralia", "Urbanus", "Laughton", "Ruttger", "Ber", "Worthy", "Dion", "Clotilda", "Car", "Elizabeth", "Nathalia", "Teddy", "Humfried", "Haleigh", "Randi", "Thedric", "Lee", "Elianora", "Charita", "Harvey", "Johanna", "Lauritz", "Joyan", "Desi", "Nola", "Cos", "Tadd", "Pepito", "Vaughan", "Riva", "Prudi", "Roanne", "Gram", "Cassey", "Andria", "Caresse", "Terrence", "Alric", "Walliw", "Harmonia", "Augustine", "Engracia", "Lorin", "Zebulen", "Irwinn", "Aubree", "Doug", "Giuditta", "Julie", "Stoddard", "Matti", "Corly", "Grantham", "Even", "Rhea", "Sybil", "Bink", "Penny", "Malvina", "Estele", "Sallyann", "Andre", "Estevan", "Hamlin", "Claudian", "Malia", "Chrysler", "Forest", "Cassandra", "Lesley", "Cordelie", "Otis", "Mill", "Eal", "Rayner", "Andra", "Jany", "Rudiger", "Meggy", "Douglas", "Matthieu", "Trescha", "Tildi", "Leeland", "Drusy", "Emlen", "Etta", "Philipa", "Christalle", "Rockwell", "Adelaida", "Faunie", "Enriqueta", "Steve", "Maurice", "Anthe", "Griffy", "Caria", "Nolan", "Darrelle", "Joell", "Jerrylee", "Travis", "Paxton", "Lucian", "Lyssa", "Adelind", "Alane", "Jareb", "Frederica", "Sybil", "Gisele", "Merrill", "Wilburt", "Dilan", "Jephthah", "Daisi", "Catlee", "Olivette", "Robin", "Briano", "Elfreda", "Friedrich", "Kaycee", "Corny", "Alisha", "Val", "Neda", "Salli", "Dimitri", "Tremayne", "Mylo", "Gallard", "Marlon", "Don", "Edy", "Rowan", "Georas", "Rosita", "Quinta", "Tab", "Leila", "Faber", "Corby", "Arlena", "Kym", "Hubert", "Caroline", "Carmel", "Truman", "Osborne", "Natala", "Evonne", "Randee", "Willamina", "Marie", "Lynnett", "Nikolaus", "Donn", "Hubert", "Maddie", "Neely", "Darsey", "Arnuad", "Cheri", "Davina", "Inger", "Kaile", "Veradis", "Horten", "Barbara-anne", "Davidde", "Lon", "Kacy", "Seline", "Isa", "Carolynn", "Jaye", "Decca", "Aimee", "Boothe", "Humphrey", "Jarret", "Benedicto", "Debra", "Elsi", "Welby", "Eugenia", "Harley", "Imogen", "Verna", "Bobbie", "Herrick", "Devin", "Linzy", "Perla", "Tristam", "Agace", "Tiebold", "Adrianne", "Tessi", "Jade", "Gerrard", "Cyndie", "Ede", "Alika", "Tanny", "Cirstoforo", "Ephrayim", "Hyacinthie", "Wolfgang", "Fiann", "Rose", "Fax", "Marianne", "Ania", "Lucy", "Celestina", "Ellswerth", "Zebedee", "Arlen", "Briant", "Robert", "Erwin", "Bordie", "Ibbie", "Ezekiel", "Baillie", "Eldridge", "Darla", "Johnathan", "Pieter", "Renee", "Patty", "Anthiathia", "Vernen", "Christen", "Norry", "Penny", "Nevsa", "Gino", "Spike", "Ferd", "Donella", "Jaymie", "Reggie", "Dyane", "Jessie", "Cornall", "Gabriele", "Halsy", "Delila", "Nicolis", "Marianne", "Sonja", "Viva", "Holly-anne", "Norman", "Brenn", "Rosene", "Jennie", "Fitzgerald", "Willi", "Cece", "Marylou", "Indira", "Joyce", "Krissy", "Fannie", "Bridie", "Eben", "Hershel", "Nicol", "Evaleen", "Carlina", "Tanitansy", "Zechariah", "Arlyn", "Dalila", "Porty", "Nerty", "Jessie", "Anneliese", "Dion", "Bertram", "Jimmie", "Krisha", "Marya", "Elyse", "Mart", "Angie", "Addy", "Ara", "Dorthy", "Emlynn", "Lindsy", "Adaline", "Winona", "Andonis", "Melissa", "Weidar", "Clemmy", "Gusella", "Bobinette", "Josy", "Nita", "Myrlene", "Morgan", "Corbet", "Crissie", "Edgardo", "Kennan", "Alden", "Colby", "Poul", "Catharine", "Lazarus", "Ulises", "Devy", "Daile", "Cacilie", "Eb", "Jenn", "Emlen", "Agnes", "Cacilie", "Belia", "Renae", "Leroy", "Claretta", "Allyn", "Ambrose", "Bucky", "Jackqueline", "Hillery", "Danny", "Fred", "Skipp", "Cully", "Hervey", "Brok", "Doreen", "Jermain", "Odetta", "Page", "Aubrette", "Hildy", "Melina", "Margaretha", "Alleen", "Rosabella", "Becka", "Leslie", "Kathlin", "Elsey", "Tammara", "Raffarty", "Catlee", "Aggi", "Elbertine", "Erv", "Court", "Hamish", "Kirstin", "Katlin", "Patrick", "Terese", "Elden", "Miran", "Byrle", "Maurita", "Paddie", "Tommie", "Madelle", "Rosmunda", "Cleveland", "Klemens", "Melisa", "Orlan", "Moore", "Aldrich", "Hilario", "Myrlene", "Leandra", "Perrine", "Ursuline", "Tasha", "Donovan", "Felipe", "Donielle", "Jobi", "Aurelia", "Haley", "Ivette", "Chic", "Cameron", "Emilio", "Lazare", "Alexandros", "Elwin", "Andre", "Quincey", "Christine", "Lorant", "Rafa", "Emmanuel", "Jelene", "Garrard", "Janeczka", "Chantalle", "Corry", "Brita", "Harp", "Jacklyn", "Bell", "Cullen", "Rosanne", "Hasheem", "Janna", "Annabel", "Kerstin", "Jacqueline", "Clio", "Lorne", "Meryl", "Georgina", "Haily", "Rosabella", "Cathryn", "Wainwright", "Isidor", "Klaus", "Pauly", "Gabi", "Toiboid", "Bellina", "Raul", "Meredith", "Josiah", "Mariquilla", "Charlie", "Reuven", "Miguelita", "Franky", "Shayne", "Nathalie", "Loraine", "Elwin", "Dolli", "Kaylil", "Osbert", "Sarita", "Victoir", "Bonni", "Jamil", "Lizbeth", "Alley", "Britteny", "Jasmina", "Bruis", "Amandie", "Rouvin", "Tammie", "Wilburt", "Domenic", "Garrot", "Orson", "Myriam", "Hervey", "Collie", "Leslie", "Berky", "Dacia", "Chantalle", "Jacky", "Leland", "Gusta", "Paulo", "Sammy", "Ward", "Cori", "Avis", "Benjamin", "Christian", "Aron", "Gae", "Veronica", "Maris", "Morey", "Margi", "Gail", "Dedie", "Tommie", "Adlai", "Cristabel", "Augustin", "Magdaia", "Gwendolen", "Arlyn", "Tiffie", "Mia", "Carina", "Flo", "Fee", "Saudra", "Hale", "Oberon", "Lyndsie", "Aurelea", "Danya", "Georgette", "Rutherford", "Cayla", "Richardo", "Rudd", "Sharai", "Maddie", "Lonee", "Carlin", "Lotte", "Dana", "Tresa", "Viv", "Kim", "Tull", "Camel", "Correy", "Tobi", "Lilas", "Alvis", "Kati", "Mona", "Darcee", "Maddie", "Bartel", "Ken", "Nealson", "Trista", "Alejandro", "Monroe", "Kahlil", "Lanni", "Elayne", "Zebulen", "Claribel", "Jessy", "Tova", "Rosalyn", "Rubina", "Christian", "Pepita", "Regan", "Kristen", "Quinn", "Emmie", "Ulrick", "Desmund", "Kirby", "Gabi", "Petronille", "Jaymie", "Garrek", "Faina", "Berna", "Isak", "Jenna", "Adrian", "Dur", "Jennilee", "Truda", "Ade", "Hilliard", "Lorri", "Johanna", "Terrel", "Lorette", "Link", "Winna", "Kermy", "Philippe", "Pru", "Johan", "Mireielle", "Roana", "Cristina", "Pauline", "Riki", "Adelina", "Hastie", "Moritz", "Allyce", "Kalil", "Elissa", "Allard", "Verina", "Delores", "Carmella", "Adriane", "Vasili", "Ambrosi", "Shurlocke" };
@@ -113,6 +119,14 @@ namespace eCrtSeederNS
                 case "AB":
                     //Create eCert File header AB 
                     File.WriteAllText(pathToFile + "CSL.CERT.SENT."+ CurrentDate.GenerateTodayDate(), Header.AddEcertHeaderAB() + Environment.NewLine);
+                    break;
+                case "YT":
+                    //Create eCert File header YT
+                    File.WriteAllText(pathToFile + eCertFileName, Header.AddEcertHeaderYT() + Environment.NewLine);
+                    break;
+                case "PE":
+                    //Create eCert File header PE
+                    File.WriteAllText(pathToFile + eCertFileName, Header.AddEcertHeaderYT() + Environment.NewLine);
                     break;
                 default:
                     Console.WriteLine("please spesify correct province code");
@@ -158,7 +172,7 @@ namespace eCrtSeederNS
                 string NotBeforeDate = RandomDate.GenerateRandomDate(2016, 2018);
                 string WeeksOfStudy = RandomData.RandomDigits(2);
                 string EIConfirmDate = RandomDate.GenerateRandomDate(2016, 2017);
-                string EIAmount = "1";
+                string EIAmount = "0";
 
 
                 Random rnd = StaticRandom.Instance;
@@ -192,6 +206,8 @@ namespace eCrtSeederNS
 
                 g1.NL_provintial_grant = g1value.GrantValue();
 
+                g1.TransitionGrantYT = g1value.GrantValue();
+
                 //assign value if PT indicator is F
                 if (mSFAaPTIndicator.Truncate(1) == "F")
                 {
@@ -212,10 +228,10 @@ namespace eCrtSeederNS
                 string CountryName = "CA"; //hardcoded country
                 long SINCommonForMSFAAandEcert = ValidSIN.GenerateValidSIN();
 
-                //csv file for auto msfaa signing
-                string datasource = lastName + "," + firstName + "," + DateTime.ParseExact(Birthdate, "yyyyMMdd", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd")+","+ SINCommonForMSFAAandEcert.ToString();
-                string datasourceName = "automsfaa" + SequenceNumber.ToString().PadLeft(3, '0') + ".csv";
-                File.AppendAllText(pathToFile + datasourceName, datasource + Environment.NewLine);
+                ////csv file for auto msfaa signing
+                //string datasource = lastName + "," + firstName + "," + DateTime.ParseExact(Birthdate, "yyyyMMdd", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd")+","+ SINCommonForMSFAAandEcert.ToString();
+                //string datasourceName = "automsfaa" + SequenceNumber.ToString().PadLeft(3, '0') + ".csv";
+                //File.AppendAllText(pathToFile + datasourceName, datasource + Environment.NewLine);
 
                 RecordMSFAA =
                         "200" //MSFAA RecordType
@@ -249,10 +265,11 @@ namespace eCrtSeederNS
 
 
                 //Total all grants
+               
                 int AwardTotal = g1.cSGP_LI_at_NBD_or_cSGP_PT_at_NBD + g1.cSGP_MI_at_NBD + g1.cSGP_PD_at_NBD + g1.cSGP_FTDEP_at_the_NBD_or_cSGP_PTDEP_at_the_NBD + g1.cSGP_PDSE_at_the_NBD + MidPoint.ValueAtMidPoint(g1.cSGP_LI_at_NBD_or_cSGP_PT_at_NBD) + MidPoint.ValueAtMidPoint(g1.cSGP_MI_at_NBD) + MidPoint.ValueAtMidPoint(g1.cSGP_PD_at_NBD) + MidPoint.ValueAtMidPoint(g1.cSGP_FTDEP_at_the_NBD_or_cSGP_PTDEP_at_the_NBD) + MidPoint.ValueAtMidPoint(g1.cSGP_PDSE_at_the_NBD);
+                int AwardTotalYT = AwardTotal + g1.TransitionGrantYT;
 
-
-                eCertRecordNS =
+                 eCertRecordNS =
                     "D"   //1 RecordType 
                     + SINCommonForMSFAAandEcert //2
                     + RandomData.RandomDigits(12) //3 StudentID
@@ -298,7 +315,74 @@ namespace eCrtSeederNS
                     + enrollmentConfirmation    //43
                     + status  //44
                     + WeeksOfStudy  //45
-                    + EIConfirmDate //46
+                    + Filler.AddFiller(8) //46 EIConfirmDate
+                    + EIAmount.PadRight(8)  //47
+                    + (firstName + lastName + "@gmail.com").PadRight(50)  //48
+                    + Filler.AddFiller(41)  //49
+                    + AwardTotal.ToString().PadLeft(5, '0')  //50
+                    + g1.cSGP_LI_at_NBD_or_cSGP_PT_at_NBD.ToString().PadLeft(5, '0') //51
+                    + g1.cSGP_MI_at_NBD.ToString().PadLeft(5, '0')   //52
+                    + g1.cSGP_PD_at_NBD.ToString().PadLeft(5, '0')   //53
+                    + g1.cSGP_FTDEP_at_the_NBD_or_cSGP_PTDEP_at_the_NBD.ToString().PadLeft(5, '0')   //54 
+                    + g1.cSGP_PDSE_at_the_NBD.ToString().PadLeft(5, '0') //55
+                    + Filler.AddFiller(20)  //56
+                    + MidPointDate  //57
+                    + MidPoint.ValueAtMidPoint(g1.cSGP_LI_at_NBD_or_cSGP_PT_at_NBD).ToString().PadLeft(5, '0') //58
+                    + MidPoint.ValueAtMidPoint(g1.cSGP_MI_at_NBD).ToString().PadLeft(5, '0') //59
+                    + MidPoint.ValueAtMidPoint(g1.cSGP_PD_at_NBD).ToString().PadLeft(5, '0')    //60
+                    + MidPoint.ValueAtMidPoint(g1.cSGP_FTDEP_at_the_NBD_or_cSGP_PTDEP_at_the_NBD).ToString().PadLeft(5, '0') //61
+                    + MidPoint.ValueAtMidPoint(g1.cSGP_PDSE_at_the_NBD).ToString().PadLeft(5, '0')  //62
+                    + Filler.AddFiller(20); //63
+
+                eCertRecordPE =
+                    "D"   //1 RecordType 
+                    + SINCommonForMSFAAandEcert //2
+                    + RandomData.RandomDigits(12) //3 StudentID
+                    + maritalStatus //4
+                    + studenttype  //5
+                    + gender   //6
+                    + "1"   // language 7
+                    + disabilityIndicator  //8
+                    + Birthdate //9
+                    + lastName.PadRight(50)  //10
+                    + firstName.PadRight(25) //11
+                    + address.PadRight(50)  //12
+                    + address.PadRight(50)  //13
+                    + city.PadRight(28)   //14
+                    + provinceCode //15
+                    + postalcode    //16
+                    + Phone.PadRight(20)    //17
+                    + CountryName.PadRight(20) //18
+                    + CountryName.PadRight(20) //19  Alt Country
+                    + Filler.AddFiller(15)  //20
+                    + address.Truncate(50).PadRight(50)  //21
+                    + address.Truncate(50).PadRight(50)  //22
+                    + city.Truncate(28).PadRight(28)   //23
+                    + provinceCode    //22 
+                    + postalcode    //23
+                    + eicode //24
+                    + eiName.PadRight(40)   //25
+                    + address.Truncate(20).PadRight(20)   //26
+                    + address.Truncate(20).PadRight(20)   //27
+                    + fieldofstudy.PadRight(2)   //28
+                    + programName.Truncate(30).PadRight(30)  //29
+                    + currentProgramYear    //30
+                    + currentProgramYear  //31  ProgramYears
+                    + ProgramStartDate  //32
+                    + ProgramEndDate    //33
+                    + semesterIndicator //34
+                    + CSLAmount.PadLeft(6, '0')     //35
+                    + Filler.AddFiller(6)   //36
+                    + (Convert.ToInt32(CSLAmount) + AwardTotal).ToString().PadLeft(6, '0') //37
+                    + mSFAaPTIndicator.Truncate(1) //38 PT Indicator
+                    + Filler.AddFiller(4)   //39
+                    + CertificateNumber //40
+                    + NotBeforeDate //41
+                    + DateTime.Now.ToString("yyyyMMdd") //42
+                    + enrollmentConfirmation    //43
+                    + status  //44
+                    + WeeksOfStudy  //45
+                    + Filler.AddFiller(8) //46 EIConfirmDate
                     + EIAmount.PadRight(8)  //47
                     + (firstName + lastName + "@gmail.com").PadRight(50)  //48
                     + Filler.AddFiller(41)  //49
@@ -324,7 +408,7 @@ namespace eCrtSeederNS
                     + RandomData.RandomDigits(9) //StudentID //3
                     + maritalStatus //4
                     + studenttype  //5
-                    + "F"    //6   Gender
+                    + item.SelectRandomValueFromList(GenderLetter)  //6   Gender
                     + "1"    //7  Language
                     + disabilityIndicator  //8
                     + Birthdate //9
@@ -334,7 +418,7 @@ namespace eCrtSeederNS
                     + address.Truncate(20).PadRight(20) //13
                     + provinceCode   //14
                     + postalcode   //15
-                    + city.PadRight(20)   //16
+                    + city.Truncate(20).PadRight(20)   //16
                     + CountryName.PadRight(20)  //17
                     + address.Truncate(20).PadRight(20)  //18
                     + address.Truncate(20).PadRight(20)  //19
@@ -419,7 +503,7 @@ namespace eCrtSeederNS
                     + lastName.Truncate(25).PadRight(25) //2.23 
                     + firstName.Truncate(16).PadRight(16) //2.24
                     + firstName.Truncate(10).PadRight(10) //2.25  Middle Name
-                    + "M" //    2.26 Hardcoded Gender
+                    + item.SelectRandomValueFromList(GenderLetter)//gender  //    2.26  Gender
                     + Birthdate //2.27
                     + "1" // 2.28 Language
                     + maritalStatus //2.29
@@ -485,15 +569,75 @@ namespace eCrtSeederNS
                 AB_ecert_totalCSGPamount = AB_ecert_totalCSGPamount + AwardTotal;
 
 
+                //eCert record for YT
+                eCertRecordYT =
+                    "D" // 1 Record Type
+                    + SINCommonForMSFAAandEcert //2 SIN
+                    + RandomData.RandomDigits(12) //3 StudentID
+                    + maritalStatus //4
+                    + item.SelectRandomValueFromList(GenderLetter)//gender   5
+                    + "1"   // language 6
+                    + Birthdate //7
+                    + lastName.PadRight(50)  //8
+                    + firstName.PadRight(25) //9
+                    + address.PadRight(50)  //10
+                    + address.PadRight(50)  //11
+                    + city.PadRight(28)   //12
+                    + provinceCode //13
+                    + Phone.PadRight(20)    //14
+                    + postalcode //15
+                    + CountryName.PadRight(20) //16
+                    + (firstName + lastName + "@gmail.com").PadRight(50)  //17
+                    + eicode // 18
+                    + fieldofstudy.PadRight(2)   //19
+                    + currentProgramYear    //20
+                    + currentProgramYear  //21  ProgramYears
+                    + ProgramStartDate  //22
+                    + ProgramEndDate    //23
+                    + CSLAmount.PadLeft(6, '0')     //24
+                    + mSFAaPTIndicator.Truncate(1) //25 PT Indicator
+                    + Filler.AddFiller(2)   //26
+                    + CertificateNumber //27
+                    + NotBeforeDate // 28
+                    + DateTime.Now.ToString("yyyyMMdd") //29
+                    + status  //30
+                    + WeeksOfStudy  //31
+                    + "000000" // 32 CAG
+                    + "000000" // 33 CAG
+                    + g1.TransitionGrantYT.ToString().PadLeft(6, '0') //34 Transition Grant
+                    + AwardTotalYT.ToString().PadLeft(5, '0') //35
+                    + g1.cSGP_LI_at_NBD_or_cSGP_PT_at_NBD.ToString().PadLeft(5, '0') //36
+                    + g1.cSGP_MI_at_NBD.ToString().PadLeft(5, '0')   //37
+                    + g1.cSGP_PD_at_NBD.ToString().PadLeft(5, '0')   //38
+                    + g1.cSGP_FTDEP_at_the_NBD_or_cSGP_PTDEP_at_the_NBD.ToString().PadLeft(5, '0')   //39 
+                    + g1.cSGP_PDSE_at_the_NBD.ToString().PadLeft(5, '0') //40
+                    + Filler.AddFiller(20) //41
+                    + MidPointDate  //42
+                    + MidPoint.ValueAtMidPoint(g1.cSGP_LI_at_NBD_or_cSGP_PT_at_NBD).ToString().PadLeft(5, '0') //43
+                    + MidPoint.ValueAtMidPoint(g1.cSGP_MI_at_NBD).ToString().PadLeft(5, '0') //44
+                    + MidPoint.ValueAtMidPoint(g1.cSGP_PD_at_NBD).ToString().PadLeft(5, '0')    //45
+                    + MidPoint.ValueAtMidPoint(g1.cSGP_FTDEP_at_the_NBD_or_cSGP_PTDEP_at_the_NBD).ToString().PadLeft(5, '0') //46
+                    + MidPoint.ValueAtMidPoint(g1.cSGP_PDSE_at_the_NBD).ToString().PadLeft(5, '0')  //47
+                    + Filler.AddFiller(20) //48
+                    + enrollmentConfirmation    //49
+                    + Filler.AddFiller(8) //50 EIConfirmDate
+                    + EIAmount.PadRight(8)  //51
+                    + programName.Truncate(50).PadRight(50)  //52
+                    + disabilityIndicator //53
+                    + CourseLoad.GenerateCourseLoad(10, 99) //54
+                    + Filler.AddFiller(27) //55
+                     ;
 
                 if (status == "N")
                 {
                     TotalOfCanceledDisbursement = TotalOfCanceledDisbursement + AwardTotal + Convert.ToInt32(CSLAmount);
+                    TotalOfCanceledDisbursementYT = TotalOfCanceledDisbursementYT + AwardTotalYT + Convert.ToInt32(CSLAmount);
                 }
                 else
                 {
                     //Total of all Non Cancelled disbursements per file
                     TotalDisbursement = TotalDisbursement + AwardTotal + Convert.ToInt32(CSLAmount);
+                    TotalDisbursementYT = TotalDisbursementYT + AwardTotalYT + Convert.ToInt32(CSLAmount);
                 }
 
                 SINHashTotal = SINHashTotal + SINCommonForMSFAAandEcert;
@@ -505,8 +649,15 @@ namespace eCrtSeederNS
                         //Append eCert records
                         File.AppendAllText(pathToFile + eCertFileName, eCertRecordNS + Environment.NewLine);
                         break;
+                    case "PE":
+                        //Append eCert records
+                        File.AppendAllText(pathToFile + eCertFileName, eCertRecordPE + Environment.NewLine);
+                        break;
                     case "NL":
                         File.AppendAllText(pathToFile + eCertFileName, eCertRecordNL + Environment.NewLine);
+                        break;
+                    case "YT":
+                        File.AppendAllText(pathToFile + eCertFileName, eCertRecordYT + Environment.NewLine);
                         break;
                     case "ON":
                         //Append eCert records
@@ -551,11 +702,16 @@ namespace eCrtSeederNS
             //Create trailer for MSFAA file
             MSFAATrailer = "999" + MSFAAFileTitle.ToString().PadRight(40) +NumberOfeCertRecords.ToString().PadLeft(9,'0')+SINHashTotal.ToString().PadLeft(15,'0')+Filler.AddFiller(533);
 
+            //Add trailer to eCert
             switch (Originator)
             {
                 case "NS":
                     //add trailer to eCert NS
                     File.AppendAllText(pathToFile + eCertFileName, "T" + NumberOfeCertRecords.ToString().PadLeft(6, '0') + TotalDisbursement.ToString().PadLeft(9, '0') + TotalOfCanceledDisbursement.ToString().PadLeft(9, '0') + Filler.AddFiller(828)+Environment.NewLine);
+                    break;
+                case "PE":
+                    //add trailer to eCert PE
+                    File.AppendAllText(pathToFile + eCertFileName, "T" + NumberOfeCertRecords.ToString().PadLeft(6, '0') + TotalDisbursement.ToString().PadLeft(9, '0') + TotalOfCanceledDisbursement.ToString().PadLeft(9, '0') + Filler.AddFiller(828) + Environment.NewLine);
                     break;
                 case "NL":
                     //add trailer to eCert NL
@@ -568,6 +724,10 @@ namespace eCrtSeederNS
                 case "AB":
                     //add trailer to eCert AB 
                     File.AppendAllText(pathToFile + "CSL.CERT.SENT." + CurrentDate.GenerateTodayDate(), "99" + NumberOfeCertRecords.ToString().PadLeft(9, '0') + NumberOfeCertRecords.ToString().PadLeft(9, '0')+ "000000000"+ NumberOfeCertRecords.ToString().PadLeft(9, '0')+ AB_ecert_Section6_counter.ToString().PadLeft(9,'0') + AB_ecert_totalCSLamount.ToString().PadLeft(15, '0') + AB_ecert_totalCSGPamount.ToString().PadLeft(15, '0') + Filler.AddFiller(193) + Environment.NewLine);
+                    break;
+                case "YT":
+                    //add trailer to eCert YT
+                    File.AppendAllText(pathToFile + eCertFileName, "T" + NumberOfeCertRecords.ToString().PadLeft(6, '0') + TotalDisbursementYT.ToString().PadLeft(9, '0') + TotalOfCanceledDisbursementYT.ToString().PadLeft(9, '0') + Filler.AddFiller(828) + Environment.NewLine);
                     break;
             }
             //add trailer to MSFAA

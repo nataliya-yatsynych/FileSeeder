@@ -16,6 +16,8 @@ namespace eCrtSeederNS
         public int cSGP_PDSE_at_the_NBD { get; set; }
         public int TotalAmount { get; set; } //Total CSL
         public int NL_provintial_grant { get; set; } //for NL ecert
+        public int TransitionGrantYT { get; set; } //for YT ecert
+        
 
     }     
 
@@ -27,7 +29,7 @@ namespace eCrtSeederNS
             Random RandomGrant = StaticRandom.Instance;
 
             List<int> GrantList = new List<int>();
-            GrantList.Add(RandomGrant.Next(500, 3999));
+            GrantList.Add(RandomGrant.Next(500, 1500));
             GrantList.Add(0);
             GrantList.Add(0);
 
