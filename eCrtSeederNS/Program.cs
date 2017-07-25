@@ -429,7 +429,7 @@ namespace eCrtSeederNS
                     + address.Truncate(20).PadRight(20)   //24
                     + address.Truncate(20).PadRight(20)   //25
                     + fieldofstudy.PadRight(2)   //26
-                    + Filler.AddFiller(8)     //EIConfirmDate //27
+                    + EIConfirmDate //27
                     + EIAmount.PadRight(8)  //28
                     + Filler.AddFiller(6)   //29
                     + ProgramStartDate  //30
