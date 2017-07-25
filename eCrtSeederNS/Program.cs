@@ -25,15 +25,9 @@ namespace eCrtSeederNS
         public static string MSFAAfileName { get; set; }
         //ecert
         public static int TotalDisbursement { get; set; }
-        public static int TotalDisbursementNS { get; set; }
-        public static int TotalDisbursementPE { get; set; }
         public static int TotalDisbursementYT { get; set; }
-        public static int TotalDisbursementNL { get; set; }
         public static int TotalOfCanceledDisbursement { get; set; }
-        public static int TotalOfCanceledDisbursementNS { get; set; }
-        public static int TotalOfCanceledDisbursementNL { get; set; }
         public static int TotalOfCanceledDisbursementYT { get; set; }
-        public static int TotalOfCanceledDisbursementPE { get; set; }
 
         public static int AwardTotal { get; set; }
         public static int AB_ecert_totalCSLamount { get; set; }
@@ -312,7 +306,7 @@ namespace eCrtSeederNS
                     + semesterIndicator //34
                     + CSLAmount.PadLeft(6, '0')     //35
                     + Filler.AddFiller(6)   //36
-                    + CSLAmount.PadLeft(6, '0') //(Convert.ToInt32(CSLAmount) + AwardTotal).ToString().PadLeft(6, '0') //37
+                    + (Convert.ToInt32(CSLAmount) + AwardTotal).ToString().PadLeft(6, '0') //37
                     + mSFAaPTIndicator.Truncate(1) //38 PT Indicator
                     + Filler.AddFiller(4)   //39
                     + CertificateNumber //40
@@ -322,7 +316,7 @@ namespace eCrtSeederNS
                     + status  //44
                     + WeeksOfStudy  //45
                     + Filler.AddFiller(8) //46 EIConfirmDate
-                    + EIAmount.PadRight(8, '0')  //47
+                    + EIAmount.PadRight(8)  //47
                     + (firstName + lastName + "@gmail.com").PadRight(50)  //48
                     + Filler.AddFiller(41)  //49
                     + AwardTotal.ToString().PadLeft(5, '0')  //50
@@ -379,7 +373,7 @@ namespace eCrtSeederNS
                     + semesterIndicator //34
                     + CSLAmount.PadLeft(6, '0')     //35
                     + Filler.AddFiller(6)   //36
-                    + CSLAmount.PadLeft(6, '0') //37
+                    + (Convert.ToInt32(CSLAmount) + AwardTotal).ToString().PadLeft(6, '0') //37
                     + mSFAaPTIndicator.Truncate(1) //38 PT Indicator
                     + Filler.AddFiller(4)   //39
                     + CertificateNumber //40
@@ -389,7 +383,7 @@ namespace eCrtSeederNS
                     + status  //44
                     + WeeksOfStudy  //45
                     + Filler.AddFiller(8) //46 EIConfirmDate
-                    + EIAmount.PadLeft(8, '0')  //47
+                    + EIAmount.PadRight(8)  //47
                     + (firstName + lastName + "@gmail.com").PadRight(50)  //48
                     + Filler.AddFiller(41)  //49
                     + AwardTotal.ToString().PadLeft(5, '0')  //50
@@ -435,8 +429,8 @@ namespace eCrtSeederNS
                     + address.Truncate(20).PadRight(20)   //24
                     + address.Truncate(20).PadRight(20)   //25
                     + fieldofstudy.PadRight(2)   //26
-                    + EIConfirmDate //27
-                    + EIAmount.PadLeft(8,'0')  //28
+                    + Filler.AddFiller(8)     //EIConfirmDate //27
+                    + EIAmount.PadRight(8)  //28
                     + Filler.AddFiller(6)   //29
                     + ProgramStartDate  //30
                     + currentProgramYear    //31
@@ -446,7 +440,7 @@ namespace eCrtSeederNS
                     + semesterIndicator  //35
                     + CSLAmount.PadLeft(6, '0') //36
                     + g1.NLAmount.ToString().PadLeft(6, '0')  //37
-                    + (Convert.ToInt32(CSLAmount) + g1.NLAmount).ToString().PadLeft(6, '0') //38
+                    + (Convert.ToInt32(CSLAmount) + g1.NLAmount+AwardTotal).ToString().PadLeft(6, '0') //38
                     + Filler.AddFiller(1)   //39
                     + "I" + CertificateNumber.Truncate(6) //40
                     + NotBeforeDate //41
@@ -478,7 +472,10 @@ namespace eCrtSeederNS
                     + Filler.AddFiller(70)  //67
                     ;
 
+                // total of all disbursements for ecert NL trailer
+                NL_ecert_totaldisbursement = NL_ecert_totaldisbursement + AwardTotal + Convert.ToInt32(CSLAmount) + Convert.ToInt32(g1.NL_provintial_grant) + Convert.ToInt32(g1.NLAmount);
                 
+               
                 //eCert record section 2 for AB
                 eCertRecordAB_section2 =
                       "02" //2.1 Record Type
@@ -635,20 +632,12 @@ namespace eCrtSeederNS
                 {
                     TotalOfCanceledDisbursement = TotalOfCanceledDisbursement + AwardTotal + Convert.ToInt32(CSLAmount);
                     TotalOfCanceledDisbursementYT = TotalOfCanceledDisbursementYT + AwardTotalYT + Convert.ToInt32(CSLAmount);
-                    TotalOfCanceledDisbursementNS = TotalOfCanceledDisbursementNS + Convert.ToInt32(CSLAmount);
-                    // total of all disbursements for ecert NL trailer
-                    TotalOfCanceledDisbursementNL = TotalOfCanceledDisbursementNL + Convert.ToInt32(CSLAmount) + Convert.ToInt32(g1.NLAmount);
-                    TotalOfCanceledDisbursementPE = TotalOfCanceledDisbursementPE + Convert.ToInt32(CSLAmount);
-
                 }
                 else
                 {
                     //Total of all Non Cancelled disbursements per file
                     TotalDisbursement = TotalDisbursement + AwardTotal + Convert.ToInt32(CSLAmount);
                     TotalDisbursementYT = TotalDisbursementYT + AwardTotalYT + Convert.ToInt32(CSLAmount);
-                    TotalDisbursementNS = TotalDisbursementNS + Convert.ToInt32(CSLAmount);
-                    TotalDisbursementNL= TotalDisbursementNL + Convert.ToInt32(CSLAmount) + Convert.ToInt32(g1.NLAmount);
-                    TotalDisbursementPE= TotalDisbursementPE + Convert.ToInt32(CSLAmount);
                 }
 
                 SINHashTotal = SINHashTotal + SINCommonForMSFAAandEcert;
@@ -718,15 +707,15 @@ namespace eCrtSeederNS
             {
                 case "NS":
                     //add trailer to eCert NS
-                    File.AppendAllText(pathToFile + eCertFileName, "T" + NumberOfeCertRecords.ToString().PadLeft(6, '0') + TotalDisbursementNS.ToString().PadLeft(9, '0') + TotalOfCanceledDisbursementNS.ToString().PadLeft(9, '0') + Filler.AddFiller(828)+Environment.NewLine);
+                    File.AppendAllText(pathToFile + eCertFileName, "T" + NumberOfeCertRecords.ToString().PadLeft(6, '0') + TotalDisbursement.ToString().PadLeft(9, '0') + TotalOfCanceledDisbursement.ToString().PadLeft(9, '0') + Filler.AddFiller(828)+Environment.NewLine);
                     break;
                 case "PE":
                     //add trailer to eCert PE
-                    File.AppendAllText(pathToFile + eCertFileName, "T" + NumberOfeCertRecords.ToString().PadLeft(6, '0') + TotalDisbursementPE.ToString().PadLeft(9, '0') + TotalOfCanceledDisbursementPE.ToString().PadLeft(9, '0') + Filler.AddFiller(828) + Environment.NewLine);
+                    File.AppendAllText(pathToFile + eCertFileName, "T" + NumberOfeCertRecords.ToString().PadLeft(6, '0') + TotalDisbursement.ToString().PadLeft(9, '0') + TotalOfCanceledDisbursement.ToString().PadLeft(9, '0') + Filler.AddFiller(828) + Environment.NewLine);
                     break;
                 case "NL":
                     //add trailer to eCert NL
-                    File.AppendAllText(pathToFile + eCertFileName, "T" + NumberOfeCertRecords.ToString().PadLeft(6, '0') + TotalDisbursementNL.ToString().PadLeft(9, '0') + TotalOfCanceledDisbursementNL.ToString().PadLeft(9, '0') + Filler.AddFiller(640) + Environment.NewLine);
+                    File.AppendAllText(pathToFile + eCertFileName, "T" + NumberOfeCertRecords.ToString().PadLeft(6, '0') + NL_ecert_totaldisbursement.ToString().PadLeft(9, '0') + TotalOfCanceledDisbursement.ToString().PadLeft(9, '0') + Filler.AddFiller(640) + Environment.NewLine);
                     break;
                 case "ON":
                     //add trailer to eCert on  to do
